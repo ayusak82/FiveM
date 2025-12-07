@@ -1,0 +1,238 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#hacking-container {
+    width: 80%;
+    max-width: 800px;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hacking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #33ff33;
+    padding-bottom: 10px;
+}
+
+.hacking-header h1 {
+    font-size: 24px;
+    color: #33ff33;
+    text-transform: uppercase;
+}
+
+.timer {
+    font-size: 20px;
+    color: #ff3333;
+    font-weight: bold;
+    background-color: rgba(255, 0, 0, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ff3333;
+}
+
+.hacking-content {
+    flex: 1;
+}
+
+.terminal {
+    width: 100%;
+    background-color: #000;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #33ff33;
+}
+
+.terminal-header {
+    background-color: #333;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #33ff33;
+}
+
+.terminal-title {
+    font-size: 14px;
+    color: #fff;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.control {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.minimize {
+    background-color: #ffbd44;
+}
+
+.maximize {
+    background-color: #00ca4e;
+}
+
+.close {
+    background-color: #ff605c;
+}
+
+.terminal-body {
+    padding: 10px;
+    height: 350px;
+    overflow-y: auto;
+    color: #33ff33;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.terminal-line {
+    margin-bottom: 5px;
+    white-space: nowrap;
+}
+
+#word-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.word {
+    font-size: 18px;
+    padding: 5px 10px;
+    background-color: rgba(51, 255, 51, 0.1);
+    border: 1px solid #33ff33;
+    border-radius: 3px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.word.current {
+    background-color: rgba(51, 255, 51, 0.3);
+    border: 1px solid #fff;
+}
+
+.word.completed {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+#typing-input {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    caret-color: #fff;
+    width: calc(100% - 50px);
+    outline: none;
+}
+
+#input-prefix {
+    color: #33ff33;
+}
+
+.progress-container {
+    margin-top: 10px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #33ff33;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.attempts {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.attempt-indicators {
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.attempt {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #333;
+}
+
+.attempt.active {
+    background-color: #33ff33;
+}
+
+#result-message {
+    min-height: 20px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.success {
+    color: #33ff33;
+}
+
+.error {
+    color: #ff3333;
+}

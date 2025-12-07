@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NG Scoreboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div id="scoreboard" class="hidden">
+        <div class="scoreboard-container">
+            <div class="header">
+                <h1>サーバー情報</h1>
+                <div class="close-btn" id="close-btn">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+
+            <!-- タブメニュー -->
+            <div class="tab-menu">
+                <div class="tab-item active" data-tab="server-info">サーバー情報</div>
+                <div class="tab-item" data-tab="robbery-info">強盗情報</div>
+                <div class="tab-item" data-tab="player-list">プレイヤー一覧</div>
+                <div class="tab-item" data-tab="job-info">ジョブ情報</div>
+            </div>
+
+            <!-- サーバー情報タブ -->
+            <div class="tab-content active" id="server-info">
+                <div class="info-item">
+                    <span class="label">プレイヤー数:</span>
+                    <span class="value" id="player-count">0/0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">次の再起動:</span>
+                    <span class="value" id="next-restart-time">00:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">残り時間:</span>
+                    <span class="value" id="restart-countdown">00:00</span>
+                </div>
+            </div>
+
+            <!-- 強盗情報タブ -->
+            <div class="tab-content" id="robbery-info">
+                <div class="section-title">
+                    <i class="fas fa-mask"></i> 強盗状況
+                </div>
+                <div id="robbery-list">
+                    <!-- 強盗リストはJavaScriptで動的に追加されます -->
+                </div>
+            </div>
+
+            <!-- プレイヤー一覧タブ -->
+            <div class="tab-content" id="player-list">
+                <div class="section-title">
+                    <i class="fas fa-users"></i> プレイヤー一覧
+                </div>
+                <!-- 検索ボックスを削除 -->
+                <div id="players-container">
+                    <!-- プレイヤーリストはJavaScriptで動的に追加されます -->
+                </div>
+            </div>
+
+            <!-- ジョブ情報タブ -->
+            <div class="tab-content" id="job-info">
+                <div class="section-title">
+                    <i class="fas fa-briefcase"></i> ジョブ情報
+                </div>
+                <div id="job-list">
+                    <!-- ジョブリストはJavaScriptで動的に追加されます -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

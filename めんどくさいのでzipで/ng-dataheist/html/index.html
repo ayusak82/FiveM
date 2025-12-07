@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NG-DataHeist</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="hacking-container" class="hidden">
+        <div class="hacking-header">
+            <h1>データハッキング</h1>
+            <div class="timer">
+                <span id="timer-value">30</span>秒
+            </div>
+        </div>
+        <div class="hacking-content">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="terminal-title">secure_server.exe</span>
+                    <div class="terminal-controls">
+                        <span class="control minimize">-</span>
+                        <span class="control maximize">□</span>
+                        <span class="control close">×</span>
+                    </div>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">C:\> CONNECTING TO SERVER...</div>
+                    <div class="terminal-line">C:\> ACCESS GRANTED</div>
+                    <div class="terminal-line">C:\> INITIATING BRUTE FORCE ATTACK...</div>
+                    <div class="terminal-line">C:\> TYPE THE FOLLOWING CODES TO CONTINUE:</div>
+                    <div class="terminal-line">&nbsp;</div>
+                    <div id="word-container" class="terminal-line">
+                        <!-- Words will be inserted here by JavaScript -->
+                    </div>
+                    <div class="terminal-line">&nbsp;</div>
+                    <div class="terminal-line">
+                        <span id="input-prefix">C:\> </span>
+                        <input type="text" id="typing-input" autocomplete="off" autofocus onpaste="return false;" oncopy="return false;" oncut="return false;">
+                    </div>
+                    <div class="terminal-line" id="result-message">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-label">進行状況: <span id="progress-value">0%</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+        <div class="attempts">
+            <span>残り試行回数: </span>
+            <div class="attempt-indicators">
+                <div class="attempt active"></div>
+                <div class="attempt active"></div>
+                <div class="attempt active"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

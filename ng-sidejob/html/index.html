@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内職ミニゲーム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container" class="hidden">
+        <!-- ゲーム選択画面 -->
+        <div id="game-container">
+            <!-- ヘッダー -->
+            <div id="header">
+                <h1 id="game-title">内職ミニゲーム</h1>
+                <div id="timer-container">
+                    <span id="timer">00:00</span>
+                </div>
+            </div>
+
+            <!-- ゲームエリア -->
+            <div id="game-area">
+                <!-- タイピングゲーム -->
+                <div id="typing-game" class="game hidden">
+                    <div class="game-info">
+                        <p id="typing-target" class="target-text"></p>
+                    </div>
+                    <input type="text" id="typing-input" class="game-input" placeholder="ここに入力してください" autocomplete="off">
+                    <div class="progress-info">
+                        <p>正確性: <span id="typing-accuracy">100</span>%</p>
+                    </div>
+                </div>
+
+                <!-- 色合わせゲーム -->
+                <div id="color-game" class="game hidden">
+                    <div class="game-info">
+                        <p>指定された色を順番にクリック: <span id="color-target" class="color-display"></span></p>
+                    </div>
+                    <div id="color-grid" class="color-grid"></div>
+                    <div class="progress-info">
+                        <p>進行度: <span id="color-progress">0</span> / <span id="color-total">0</span></p>
+                    </div>
+                </div>
+
+                <!-- 記憶ゲーム -->
+                <div id="memory-game" class="game hidden">
+                    <div class="game-info">
+                        <p id="memory-instruction">アイテムを記憶してください</p>
+                    </div>
+                    <div id="memory-display" class="memory-display"></div>
+                    <div id="memory-choices" class="memory-choices hidden"></div>
+                    <div class="progress-info">
+                        <p>正解数: <span id="memory-score">0</span></p>
+                    </div>
+                </div>
+
+                <!-- リズムゲーム -->
+                <div id="rhythm-game" class="game hidden">
+                    <div class="game-info">
+                        <p>タイミングに合わせてスペースキーを押してください</p>
+                    </div>
+                    <div id="rhythm-track" class="rhythm-track">
+                        <div id="rhythm-target" class="rhythm-target"></div>
+                        <div id="rhythm-notes" class="rhythm-notes"></div>
+                    </div>
+                    <div class="progress-info">
+                        <p>コンボ: <span id="rhythm-combo">0</span></p>
+                        <p>スコア: <span id="rhythm-score">0</span></p>
+                    </div>
+                </div>
+
+                <!-- パズルゲーム -->
+                <div id="puzzle-game" class="game hidden">
+                    <div class="game-info">
+                        <p>ブロックを配置してラインを消してください</p>
+                        <p>操作: ← → 移動 | ↓ 高速落下 | ↑ 回転</p>
+                    </div>
+                    <div id="puzzle-board" class="puzzle-board"></div>
+                    <div class="progress-info">
+                        <p>ライン: <span id="puzzle-lines">0</span></p>
+                        <p>スコア: <span id="puzzle-score">0</span></p>
+                    </div>
+                </div>
+
+                <!-- レースゲーム -->
+                <div id="racing-game" class="game hidden">
+                    <div class="game-info">
+                        <p>障害物を避けてゴールを目指してください</p>
+                        <p>操作: ← → 左右移動</p>
+                    </div>
+                    <div id="racing-track" class="racing-track">
+                        <div id="racing-player" class="racing-player"></div>
+                        <div id="racing-obstacles" class="racing-obstacles"></div>
+                    </div>
+                    <div class="progress-info">
+                        <p>距離: <span id="racing-distance">0</span>m</p>
+                        <p>スコア: <span id="racing-score">0</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- フッター -->
+            <div id="footer">
+                <button id="quit-btn" class="btn btn-danger">中止 (ESC)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- スクリプト -->
+    <script src="script.js"></script>
+    <script src="games/typing.js"></script>
+    <script src="games/color.js"></script>
+    <script src="games/memory.js"></script>
+    <script src="games/rhythm.js"></script>
+    <script src="games/puzzle.js"></script>
+    <script src="games/racing.js"></script>
+</body>
+</html>

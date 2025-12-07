@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NG Lottery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="lottery-container" class="hidden">
+        <div class="lottery-card">
+            <div class="lottery-header">
+                <h1>宝くじ</h1>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
+            
+            <div class="lottery-content">
+                <!-- 初期状態 -->
+                <div id="startScreen" class="screen active">
+                    <div class="ticket-icon">
+                        <svg width="100" height="100" viewBox="0 0 100 100">
+                            <rect x="10" y="20" width="80" height="60" rx="5" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+                            <text x="50" y="45" text-anchor="middle" fill="#333" font-size="16" font-weight="bold">LOTTERY</text>
+                            <text x="50" y="65" text-anchor="middle" fill="#333" font-size="12">¥¥¥</text>
+                        </svg>
+                    </div>
+                    <p class="description">宝くじを引いて運試し！</p>
+                    <button id="playBtn" class="play-btn">宝くじを引く</button>
+                </div>
+                
+                <!-- アニメーション中 -->
+                <div id="animationScreen" class="screen">
+                    <div class="spinner-container">
+                        <div class="spinner"></div>
+                        <p class="loading-text">抽選中...</p>
+                    </div>
+                </div>
+                
+                <!-- 結果表示 -->
+                <div id="resultScreen" class="screen">
+                    <div class="result-container">
+                        <div class="celebration-icon">🎉</div>
+                        <h2 class="result-title">おめでとうございます！</h2>
+                        <div class="amount-display">
+                            <span class="currency">$</span>
+                            <span id="winAmount" class="amount">0</span>
+                        </div>
+                        <p class="result-message">当選金額が支払われました</p>
+                        
+                        <!-- ボタンコンテナ -->
+                        <div class="button-container">
+                            <button id="continueBtn" class="continue-btn" style="display: none;">
+                                続けて引く <span id="ticketCount"></span>
+                            </button>
+                            <button id="finishBtn" class="finish-btn">閉じる</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

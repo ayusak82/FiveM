@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NG Quiz System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- クイズ選択画面 -->
+    <div id="quizSelector" class="container hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="selectorTitle">NPCクイズチャレンジ</h2>
+                <button class="close-btn" onclick="closeUI()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="selectorDescription">お好きなクイズを選んで挑戦してください！</p>
+                <div id="quizList" class="quiz-list">
+                    <!-- クイズリストはJavaScriptで動的に生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- クイズ画面 -->
+    <div id="quizScreen" class="container hidden">
+        <div class="modal quiz-modal">
+            <div class="modal-header">
+                <div class="quiz-info">
+                    <h3 id="quizName">クイズ名</h3>
+                    <div class="progress-info">
+                        <span id="questionProgress">問題 1/3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="question-container">
+                    <h4 id="questionText">問題文がここに表示されます</h4>
+                    <div id="optionsList" class="options-list">
+                        <!-- 選択肢はJavaScriptで動的に生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 結果表示画面 -->
+    <div id="resultScreen" class="container hidden">
+        <div class="modal result-modal">
+            <div class="modal-header">
+                <h3 id="resultTitle">結果</h3>
+            </div>
+            <div class="modal-body">
+                <div id="resultContent" class="result-content">
+                    <!-- 結果内容はJavaScriptで動的に生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 最終結果画面 -->
+    <div id="finalResultScreen" class="container hidden">
+        <div class="modal final-result-modal">
+            <div class="modal-header">
+                <h3 id="finalResultTitle">クイズ完了</h3>
+            </div>
+            <div class="modal-body">
+                <div id="finalResultContent" class="final-result-content">
+                    <!-- 最終結果はJavaScriptで動的に生成 -->
+                </div>
+                <div class="final-actions">
+                    <p class="auto-close-text">5秒後に自動的に閉じます...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

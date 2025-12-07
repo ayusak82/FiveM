@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#container {
+    width: 80%;
+    max-width: 1000px;
+    background-color: rgba(23, 23, 23, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    overflow: hidden;
+}
+
+.header {
+    background-color: rgba(30, 30, 30, 0.9);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #3498db;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.close-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+    background-color: #c0392b;
+}
+
+.description {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.description p {
+    margin-bottom: 10px;
+}
+
+.description strong {
+    color: #e74c3c;
+}
+
+.packs-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .packs-container {
+        flex-direction: column;
+    }
+}
+
+.pack {
+    flex: 1;
+    background-color: rgba(40, 40, 40, 0.7);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pack:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pack-header {
+    background-color: rgba(30, 30, 30, 0.9);
+    padding: 12px 15px;
+}
+
+#citizenPack .pack-header {
+    border-bottom: 2px solid #2ecc71;
+}
+
+#criminalPack .pack-header {
+    border-bottom: 2px solid #e74c3c;
+}
+
+.pack-header h2 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#citizenPackName {
+    color: #2ecc71;
+}
+
+#criminalPackName {
+    color: #e74c3c;
+}
+
+.pack-content {
+    padding: 15px;
+}
+
+.pack-content p {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.pack-content ul {
+    list-style-position: inside;
+    margin-bottom: 20px;
+}
+
+.pack-content li {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.select-btn {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#selectCitizen {
+    background-color: #2ecc71;
+}
+
+#selectCitizen:hover {
+    background-color: #27ae60;
+}
+
+#selectCriminal {
+    background-color: #e74c3c;
+}
+
+#selectCriminal:hover {
+    background-color: #c0392b;
+}

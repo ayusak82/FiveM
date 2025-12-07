@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ng-voicerecorder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 録音UI -->
+    <div id="recordingContainer" class="hidden">
+        <div class="recording-modal">
+            <div class="recording-header">
+                <h2>音声録音中</h2>
+                <div class="recording-indicator">
+                    <div class="pulse-dot"></div>
+                    <span>REC</span>
+                </div>
+            </div>
+            
+            <div class="recording-content">
+                <div class="tape-info">
+                    <div class="tape-icon">🎙️</div>
+                    <div class="tape-name" id="tapeName">テープ名</div>
+                </div>
+                
+                <div class="recording-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">00:00</span>
+                        <span>/</span>
+                        <span id="totalTime">00:10</span>
+                    </div>
+                </div>
+                
+                <div class="waveform-container">
+                    <div class="waveform" id="waveform">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="recording-controls">
+                    <button id="stopRecordingBtn" class="control-btn stop-btn">
+                        <span class="btn-icon">⏹️</span>
+                        停止
+                    </button>
+                </div>
+            </div>
+            
+            <div class="recording-footer">
+                <div class="status-text">
+                    マイクから音声を録音しています...
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 音声再生用（非表示） -->
+    <audio id="audioPlayer" preload="none"></audio>
+    
+    <!-- ローディング画面 -->
+    <div id="loadingContainer" class="hidden">
+        <div class="loading-modal">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">処理中...</div>
+        </div>
+    </div>
+    
+    <!-- 通知システム -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

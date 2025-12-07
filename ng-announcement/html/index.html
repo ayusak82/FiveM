@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ng-announcement</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 入力UI -->
+    <div id="input-container" class="hidden">
+        <div class="input-panel">
+            <div class="input-header">
+                <i id="input-icon" class="fa-solid fa-bullhorn"></i>
+                <span id="input-title">お知らせを作成</span>
+                <button class="close-btn" onclick="closeInput()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="input-body">
+                <div class="job-info">
+                    <span id="job-label">職業</span>
+                    <span id="player-name">プレイヤー名</span>
+                </div>
+                <div class="input-field">
+                    <label for="message-input">メッセージ</label>
+                    <textarea id="message-input" placeholder="お知らせ内容を入力..." maxlength="200"></textarea>
+                    <div class="char-count">
+                        <span id="current-count">0</span> / <span id="max-count">200</span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-footer">
+                <button class="btn btn-cancel" onclick="closeInput()">
+                    <i class="fa-solid fa-xmark"></i> キャンセル
+                </button>
+                <button class="btn btn-submit" onclick="submitAnnouncement()">
+                    <i class="fa-solid fa-paper-plane"></i> 送信
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- お知らせ表示エリア -->
+    <div id="announcement-container"></div>
+
+    <!-- 効果音 -->
+    <audio id="notification-sound" preload="auto">
+        <source src="https://sound1.dlup.by/uploads/58705e71.wav" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

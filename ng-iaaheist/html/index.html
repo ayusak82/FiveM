@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ng-iaaheist Audio</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        #audioContainer {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+    </style>
+</head>
+<body>
+    <div id="audioContainer">
+        <audio id="alarmAudio" preload="auto" loop>
+            <source src="sounds/alarm.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        let alarmAudio = null;
+        let isPlaying = false;
+        let audioContext = null;
+        let audioInitialized = false;
+
+        // 音声初期化（改良版）
+        function initializeAudio() {
+            try {
+                console.log('[ng-iaaheist] Initializing audio system...');
+                
+                // 既存の音声要素を取得
+                alarmAudio = document.getElementById('alarmAudio');
+                
+                if (!alarmAudio) {
+                    console.error('[ng-iaaheist] Audio element not found!');
+                    return false;
+                }
+                
+                // AudioContextを作成
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    console.log('[ng-iaaheist] AudioContext created:', audioContext.state);
+                }
+                
+                // 音声要素の設定
+                alarmAudio.volume = 0.5;
+                alarmAudio.loop = true;
+                alarmAudio.muted = false;
+                
+                // イベントリスナーの設定
+                alarmAudio.addEventListener('loadeddata', function() {
+                    console.log('[ng-iaaheist] ✅ Audio loaded successfully');
+                    audioInitialized = true;
+                });
+                
+                alarmAudio.addEventListener('canplay', function() {
+                    console.log('[ng-iaaheist] ✅ Audio can play');
+                    audioInitialized = true;
+                });
+                
+                alarmAudio.addEventListener('error', function(e) {
+                    console.error('[ng-iaaheist] ❌ Audio error:', e);
+                    console.error('[ng-iaaheist] Audio source:', alarmAudio.src);
+                    console.error('[ng-iaaheist] Audio error code:', alarmAudio.error ? alarmAudio.error.code : 'unknown');
+                });
+                
+                alarmAudio.addEventListener('play', function() {
+                    console.log('[ng-iaaheist] ✅ Audio play event fired');
+                    isPlaying = true;
+                });
+                
+                alarmAudio.addEventListener('pause', function() {
+                    console.log('[ng-iaaheist] Audio pause event fired');
+                    isPlaying = false;
+                });
+                
+                alarmAudio.addEventListener('ended', function() {
+                    console.log('[ng-iaaheist] Audio ended event fired');
+                    if (isPlaying) {
+                        console.log('[ng-iaaheist] Restarting loop...');
+                        alarmAudio.currentTime = 0;
+                        alarmAudio.play().catch(function(error) {
+                            console.error('[ng-iaaheist] Loop restart error:', error);
+                        });
+                    }
+                });
+                
+                // 音声ファイルの事前読み込み
+                alarmAudio.load();
+                
+                console.log('[ng-iaaheist] Audio initialization completed');
+                console.log('[ng-iaaheist] Audio source:', alarmAudio.src);
+                console.log('[ng-iaaheist] Audio ready state:', alarmAudio.readyState);
+                
+                // 音声ファイルの存在確認
+                testAudioFile();
+                
+                return true;
+                
+            } catch (error) {
+                console.error('[ng-iaaheist] Audio initialization error:', error);
+                return false;
+            }
+        }
+
+        // 音声ファイルテスト
+        function testAudioFile() {
+            fetch('sounds/alarm.mp3')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('[ng-iaaheist] ✅ Audio file accessible (status:', response.status, ')');
+                        console.log('[ng-iaaheist] Audio file size:', response.headers.get('content-length'), 'bytes');
+                    } else {
+                        console.error('[ng-iaaheist] ❌ Audio file not accessible (status:', response.status, ')');
+                    }
+                })
+                .catch(error => {
+                    console.error('[ng-iaaheist] ❌ Audio file fetch error:', error);
+                });
+        }
+
+        // 警報再生（改良版）
+        function playAlarm(volume = 0.5) {
+            console.log('[ng-iaaheist] playAlarm called with volume:', volume);
+            
+            if (!alarmAudio) {
+                console.error('[ng-iaaheist] Audio not initialized, attempting initialization...');
+                if (!initializeAudio()) {
+                    console.error('[ng-iaaheist] Failed to initialize audio');
+                    return false;
+                }
+                
+                // 初期化後に少し待ってから再試行
+                setTimeout(() => playAlarm(volume), 1000);
+                return false;
+            }
+            
+            try {
+                // 既に再生中の場合は停止
+                if (!alarmAudio.paused) {
+                    console.log('[ng-iaaheist] Stopping current alarm');
+                    alarmAudio.pause();
+                    alarmAudio.currentTime = 0;
+                }
+                
+                // AudioContextの状態確認と再開
+                if (audioContext) {
+                    console.log('[ng-iaaheist] AudioContext state:', audioContext.state);
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume().then(() => {
+                            console.log('[ng-iaaheist] AudioContext resumed');
+                        }).catch(err => {
+                            console.error('[ng-iaaheist] AudioContext resume error:', err);
+                        });
+                    }
+                }
+                
+                // 音量設定
+                const newVolume = Math.max(0, Math.min(1, volume));
+                alarmAudio.volume = newVolume;
+                console.log('[ng-iaaheist] Volume set to:', newVolume);
+                
+                // 再生位置をリセット
+                alarmAudio.currentTime = 0;
+                
+                // 音声の状態をログ
+                console.log('[ng-iaaheist] Audio ready state:', alarmAudio.readyState);
+                console.log('[ng-iaaheist] Audio paused:', alarmAudio.paused);
+                console.log('[ng-iaaheist] Audio muted:', alarmAudio.muted);
+                console.log('[ng-iaaheist] Audio volume:', alarmAudio.volume);
+                
+                // 再生開始
+                console.log('[ng-iaaheist] Attempting to play audio...');
+                const playPromise = alarmAudio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(function() {
+                        isPlaying = true;
+                        console.log('[ng-iaaheist] ✅ Alarm started successfully!');
+                        return true;
+                    }).catch(function(error) {
+                        console.error('[ng-iaaheist] ❌ Alarm play failed:', error);
+                        console.error('[ng-iaaheist] Error name:', error.name);
+                        console.error('[ng-iaaheist] Error message:', error.message);
+                        isPlaying = false;
+                        
+                        // エラーの詳細に応じた対処
+                        handlePlaybackError(error);
+                        return false;
+                    });
+                } else {
+                    // 古いブラウザ対応
+                    isPlaying = true;
+                    console.log('[ng-iaaheist] Audio started (legacy browser)');
+                    return true;
+                }
+                
+            } catch (error) {
+                console.error('[ng-iaaheist] Alarm play exception:', error);
+                isPlaying = false;
+                return false;
+            }
+        }
+
+        // 再生エラーハンドリング
+        function handlePlaybackError(error) {
+            if (error.name === 'NotAllowedError') {
+                console.log('[ng-iaaheist] User interaction required for audio playback');
+                // ユーザーインタラクションイベントの作成
+                createUserInteractionListener();
+            } else if (error.name === 'NotSupportedError') {
+                console.error('[ng-iaaheist] Audio format not supported');
+            } else if (error.name === 'AbortError') {
+                console.error('[ng-iaaheist] Audio playback aborted');
+            } else {
+                console.error('[ng-iaaheist] Unknown audio error:', error);
+            }
+        }
+
+        // ユーザーインタラクションリスナー
+        function createUserInteractionListener() {
+            console.log('[ng-iaaheist] Creating user interaction listener for audio');
+            
+            function enableAudio() {
+                console.log('[ng-iaaheist] User interaction detected, enabling audio');
+                alarmAudio.play().then(() => {
+                    isPlaying = true;
+                    console.log('[ng-iaaheist] ✅ Audio enabled after user interaction');
+                }).catch(err => {
+                    console.error('[ng-iaaheist] Failed to enable audio after interaction:', err);
+                });
+                
+                // リスナーを削除
+                document.removeEventListener('click', enableAudio);
+                document.removeEventListener('keydown', enableAudio);
+                document.removeEventListener('touchstart', enableAudio);
+            }
+            
+            document.addEventListener('click', enableAudio, { once: true });
+            document.addEventListener('keydown', enableAudio, { once: true });
+            document.addEventListener('touchstart', enableAudio, { once: true });
+        }
+
+        // 警報停止
+        function stopAlarm() {
+            console.log('[ng-iaaheist] stopAlarm called');
+            
+            if (!alarmAudio) {
+                console.warn('[ng-iaaheist] Audio not initialized for stopping');
+                return;
+            }
+            
+            try {
+                if (!alarmAudio.paused) {
+                    alarmAudio.pause();
+                    alarmAudio.currentTime = 0;
+                    console.log('[ng-iaaheist] ✅ Alarm stopped successfully');
+                }
+                isPlaying = false;
+            } catch (error) {
+                console.error('[ng-iaaheist] Alarm stop error:', error);
+            }
+        }
+
+        // 音量設定
+        function setVolume(volume) {
+            if (!alarmAudio) {
+                console.error('[ng-iaaheist] Audio not initialized for volume setting');
+                return;
+            }
+            
+            try {
+                const newVolume = Math.max(0, Math.min(1, volume));
+                alarmAudio.volume = newVolume;
+                console.log('[ng-iaaheist] Volume set to:', newVolume);
+            } catch (error) {
+                console.error('[ng-iaaheist] Volume set error:', error);
+            }
+        }
+
+        // DOM読み込み完了後に初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('[ng-iaaheist] DOM loaded, initializing audio...');
+            initializeAudio();
+        });
+
+        // NUIメッセージリスナー
+        window.addEventListener('message', function(event) {
+            const data = event.data;
+            console.log('[ng-iaaheist] NUI Message received:', data);
+            
+            switch(data.action) {
+                case 'initialize':
+                    console.log('[ng-iaaheist] NUI Initialize message received');
+                    if (!audioInitialized) {
+                        initializeAudio();
+                    }
+                    break;
+                    
+                case 'playAlarm':
+                    console.log('[ng-iaaheist] NUI PlayAlarm message received');
+                    playAlarm(data.volume || 0.5);
+                    break;
+                    
+                case 'stopAlarm':
+                    console.log('[ng-iaaheist] NUI StopAlarm message received');
+                    stopAlarm();
+                    break;
+                    
+                case 'setVolume':
+                    console.log('[ng-iaaheist] NUI SetVolume message received');
+                    setVolume(data.volume || 0.5);
+                    break;
+                    
+                default:
+                    console.warn('[ng-iaaheist] Unknown NUI action:', data.action);
+                    break;
+            }
+        });
+
+        // デバッグ用関数
+        window.debugAlarm = function() {
+            console.log('[ng-iaaheist] === DEBUG INFO ===');
+            console.log('- Audio element:', alarmAudio);
+            console.log('- Audio initialized:', audioInitialized);
+            console.log('- Is playing flag:', isPlaying);
+            console.log('- Audio paused:', alarmAudio ? alarmAudio.paused : 'N/A');
+            console.log('- Audio current time:', alarmAudio ? alarmAudio.currentTime : 'N/A');
+            console.log('- Audio duration:', alarmAudio ? alarmAudio.duration : 'N/A');
+            console.log('- Audio volume:', alarmAudio ? alarmAudio.volume : 'N/A');
+            console.log('- Audio ready state:', alarmAudio ? alarmAudio.readyState : 'N/A');
+            console.log('- Audio source:', alarmAudio ? alarmAudio.src : 'N/A');
+            console.log('- Audio muted:', alarmAudio ? alarmAudio.muted : 'N/A');
+            console.log('- AudioContext:', audioContext);
+            console.log('- AudioContext state:', audioContext ? audioContext.state : 'N/A');
+            console.log('=================');
+        };
+
+        // 手動テスト用関数
+        window.testAlarm = function() {
+            console.log('[ng-iaaheist] Manual test started');
+            playAlarm(0.5);
+        };
+
+        window.stopTestAlarm = function() {
+            console.log('[ng-iaaheist] Manual test stopped');
+            stopAlarm();
+        };
+
+        // エラーハンドリング
+        window.addEventListener('error', function(e) {
+            console.error('[ng-iaaheist] JavaScript error:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('[ng-iaaheist] Unhandled promise rejection:', e.reason);
+        });
+
+        // リソースアンロード時のクリーンアップ
+        window.addEventListener('beforeunload', function() {
+            if (isPlaying) {
+                stopAlarm();
+            }
+        });
+
+        console.log('[ng-iaaheist] Script loaded');
+    </script>
+</body>
+</html>

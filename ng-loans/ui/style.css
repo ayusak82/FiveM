@@ -1,0 +1,522 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+#loan-container {
+    width: 80%;
+    max-width: 1000px;
+    background-color: rgba(245, 245, 245, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: none;
+}
+
+.header {
+    background-color: #1a5276;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i {
+    font-size: 24px;
+}
+
+.header h1 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#close-button:hover {
+    transform: scale(1.1);
+}
+
+.tabs {
+    display: flex;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #555;
+    transition: all 0.2s;
+}
+
+.tab-button i {
+    font-size: 18px;
+}
+
+.tab-button:hover {
+    background-color: #e0e0e0;
+}
+
+.tab-button.active {
+    background-color: white;
+    color: #1a5276;
+    font-weight: 500;
+    border-bottom: 3px solid #1a5276;
+}
+
+.tab-content {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 16px;
+    margin: 15px 0;
+    color: #444;
+}
+
+/* ローン情報リスト */
+.loan-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.loan-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: all 0.2s;
+}
+
+.loan-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.loan-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.loan-card-title {
+    font-weight: 500;
+    color: #1a5276;
+}
+
+.loan-type {
+    font-size: 12px;
+    background-color: #eee;
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.loan-type.vehicle {
+    background-color: #d4efdf;
+    color: #196f3d;
+}
+
+.loan-type.standard {
+    background-color: #ebf5fb;
+    color: #2874a6;
+}
+
+.loan-info {
+    margin-top: 10px;
+}
+
+.loan-info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.loan-info-value {
+    font-weight: 500;
+}
+
+.loan-progress {
+    margin: 15px 0;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #2874a6;
+}
+
+.loan-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #777;
+}
+
+.loan-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.loan-action-btn {
+    background-color: #2874a6;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+}
+
+.loan-action-btn:hover {
+    background-color: #1a5276;
+}
+
+.loan-warning {
+    color: #c0392b;
+    font-size: 12px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* ローン申請フォーム */
+.loan-form, .vehicle-loan-form, .repay-form {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #444;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.hint {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.loan-summary {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.action-button {
+    background-color: #2874a6;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.action-button:hover {
+    background-color: #1a5276;
+}
+
+.action-button.secondary {
+    background-color: #95a5a6;
+}
+
+.action-button.secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+/* 車両選択 */
+.vehicle-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.vehicle-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.vehicle-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.vehicle-card-header {
+    font-weight: 500;
+    color: #1a5276;
+    margin-bottom: 10px;
+}
+
+.vehicle-info {
+    font-size: 14px;
+    color: #555;
+}
+
+.vehicle-info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.selected-vehicle, .selected-loan {
+    background-color: #ebf5fb;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.selected-vehicle h4, .selected-loan h4 {
+    font-size: 16px;
+    color: #2874a6;
+    margin-bottom: 10px;
+}
+
+.warning-text {
+    color: #c0392b;
+    font-size: 14px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 返済リスト */
+.repay-loan-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* エンプティステート */
+.no-loans, .no-vehicles {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    color: #777;
+}
+
+/* レスポンシブデザイン */
+@media screen and (max-width: 768px) {
+    #loan-container {
+        width: 95%;
+    }
+    
+    .tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+    
+    .tab-button {
+        min-width: 80px;
+    }
+    
+    .loan-list, .vehicle-list, .repay-loan-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+}
+
+.tab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.reload-button {
+    background-color: #2874a6;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reload-button:hover {
+    background-color: #1a5276;
+    transform: scale(1.05);
+}
+
+.reload-button i {
+    font-size: 14px;
+}
+
+/* リロード中のアニメーション */
+.reload-button.loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* h2タグのスタイルを調整して、flex内で正しく表示されるようにする */
+.tab-header h2 {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.ui-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    max-width: 300px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.ui-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ui-notification .notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ui-notification i {
+    font-size: 18px;
+}
+
+.ui-notification.info i {
+    color: #3498db;
+}
+
+.ui-notification.success i {
+    color: #2ecc71;
+}
+
+.ui-notification.error i {
+    color: #e74c3c;
+}
+
+.ui-notification.warning i {
+    color: #f39c12;
+}

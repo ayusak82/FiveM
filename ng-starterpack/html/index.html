@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スターターパック</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container" class="hidden">
+        <div class="header">
+            <h1 id="title">スターターパック選択</h1>
+            <div class="close-btn" id="closeBtn">✕</div>
+        </div>
+        
+        <div class="description">
+            <p>あなたのプレイスタイルに合わせたパックを選んでください。</p>
+            <p><strong>注意: どちらか1つのみ選択できます。選択後は変更できません。</strong></p>
+        </div>
+        
+        <div class="packs-container">
+            <div class="pack" id="citizenPack">
+                <div class="pack-header">
+                    <h2 id="citizenPackName">市民パック</h2>
+                </div>
+                <div class="pack-content">
+                    <p id="citizenDesc">一般市民として生活するための基本的なアイテムが含まれています。</p>
+                    <ul id="citizenItems">
+                        <!-- ここにアイテムが動的に挿入されます -->
+                    </ul>
+                    <button class="select-btn" id="selectCitizen">選択する</button>
+                </div>
+            </div>
+            
+            <div class="pack" id="criminalPack">
+                <div class="pack-header">
+                    <h2 id="criminalPackName">犯罪者パック</h2>
+                </div>
+                <div class="pack-content">
+                    <p id="criminalDesc">犯罪者として活動するための基本的なアイテムが含まれています。</p>
+                    <ul id="criminalItems">
+                        <!-- ここにアイテムが動的に挿入されます -->
+                    </ul>
+                    <button class="select-btn" id="selectCriminal">選択する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

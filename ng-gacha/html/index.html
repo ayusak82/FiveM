@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ng-gacha</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="grid-overlay"></div>
+    </div>
+    <div id="particles"></div>
+
+    <!-- Main Container -->
+    <div class="gacha-container" id="gachaContainer" style="display: none;">
+        <!-- Left Panel - Machine -->
+        <div class="machine-panel">
+            <div class="gacha-machine">
+                <div class="machine-body" id="machineBody">
+                    <div class="capsule-window">
+                        <div class="capsules-container" id="capsulesContainer"></div>
+                    </div>
+                    <div class="machine-controls">
+                        <div class="gacha-title" id="gachaTitle">🎰 ガチャ</div>
+                        <div class="price-display">
+                            <div class="coin-icon" id="priceIcon">💰</div>
+                            <span class="price" id="priceText">500 / 回</span>
+                        </div>
+                        <div class="pull-buttons">
+                            <button class="btn-pull btn-single" id="btnSingle">1回引く</button>
+                            <button class="btn-pull btn-multi" id="btnMulti">10連ガチャ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Info -->
+        <div class="info-panel">
+            <div class="panel-header">
+                <div class="balance-info">
+                    <div class="balance-item">
+                        <div class="balance-icon money">$</div>
+                        <span class="balance-value" id="balanceMoney">0</span>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-icon coin">C</div>
+                        <span class="balance-value" id="balanceCoins">0</span>
+                    </div>
+                </div>
+                <button class="btn-close" id="btnClose">✕</button>
+            </div>
+
+            <div class="pity-counter" id="pityCounter">
+                <div class="pity-label">
+                    <span>天井まで</span>
+                    <span id="pityText">0 / 100</span>
+                </div>
+                <div class="pity-bar">
+                    <div class="pity-fill" id="pityFill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="prize-list">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="prizes">景品一覧</button>
+                    <button class="tab-btn" data-tab="history">履歴</button>
+                </div>
+                <div class="prize-header" id="prizeHeader">📦 景品一覧</div>
+                <div class="prize-items" id="prizeItems"></div>
+                <div class="history-items" id="historyItems" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal - Single -->
+    <div class="result-overlay" id="resultOverlay">
+        <div class="legendary-effects" id="legendaryEffects">
+            <div class="star-burst"></div>
+        </div>
+        <div class="result-container" id="singleResult">
+            <div class="result-capsule" id="resultCapsule"></div>
+            <div class="result-item-image-container">
+                <img class="result-item-image" id="resultItemImage" src="" alt="">
+            </div>
+            <div class="result-rarity" id="resultRarity">COMMON</div>
+            <div class="result-item-name" id="resultItemName">アイテム名</div>
+            <div class="result-item-count" id="resultItemCount">×1 獲得!</div>
+            <div class="result-actions">
+                <button class="btn-result btn-again" id="btnAgain">もう一度引く</button>
+                <button class="btn-result btn-back" id="btnBack">戻る</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal - Multi -->
+    <div class="multi-result-overlay" id="multiResultOverlay">
+        <div class="multi-result-container">
+            <div class="multi-result-header">
+                <h2>🎊 10連ガチャ結果</h2>
+            </div>
+            <div class="multi-result-items" id="multiResultItems"></div>
+            <div class="multi-result-actions">
+                <button class="btn-result btn-again" id="btnMultiAgain">もう一度引く</button>
+                <button class="btn-result btn-back" id="btnMultiBack">戻る</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Gacha Modal -->
+    <div class="create-overlay" id="createOverlay" style="display: none;">
+        <div class="create-container">
+            <div class="create-header">
+                <h2>🎰 新しいガチャを作成</h2>
+                <button class="btn-close" id="btnCreateClose">✕</button>
+            </div>
+            <div class="create-body">
+                <div class="form-section">
+                    <h3>基本情報</h3>
+                    <div class="form-group">
+                        <label>ガチャ名</label>
+                        <input type="text" class="form-input" id="createName" placeholder="例: レアアイテムガチャ" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>説明</label>
+                        <input type="text" class="form-input" id="createDesc" placeholder="例: レアなアイテムが当たるかも！" maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label>1回あたりの料金</label>
+                        <input type="number" class="form-input" id="createPrice" placeholder="500" value="500" min="100" max="100000">
+                    </div>
+                    <div class="form-group">
+                        <label>支払い方法</label>
+                        <select class="form-input" id="createPriceType">
+                            <option value="money">現金</option>
+                            <option value="bank">銀行</option>
+                            <option value="coin">ガチャコイン</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>設定</h3>
+                    <div class="form-group">
+                        <label>天井回数 (0=無効)</label>
+                        <input type="number" class="form-input" id="createPity" placeholder="100" value="100" min="0" max="1000">
+                    </div>
+                    <div class="form-group">
+                        <label>カラーテーマ</label>
+                        <div class="color-themes" id="colorThemes">
+                            <div class="color-theme cyan selected" data-theme="cyan"></div>
+                            <div class="color-theme pink" data-theme="pink"></div>
+                            <div class="color-theme gold" data-theme="gold"></div>
+                            <div class="color-theme green" data-theme="green"></div>
+                            <div class="color-theme purple" data-theme="purple"></div>
+                            <div class="color-theme red" data-theme="red"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section prize-editor">
+                    <h3>景品設定</h3>
+                    <div class="prize-list-edit" id="prizeListEdit"></div>
+                    <button class="btn-add-prize" id="btnAddPrize">+ 景品を追加</button>
+                    <div class="prob-total">
+                        <span class="prob-total-label">合計確率</span>
+                        <span class="prob-total-value" id="probTotal">0% / 100%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="create-footer">
+                <button class="btn-cancel" id="btnCreateCancel">キャンセル</button>
+                <button class="btn-create" id="btnCreateSubmit">ガチャを作成</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Selector Modal -->
+    <div class="item-selector-overlay" id="itemSelectorOverlay" style="display: none;">
+        <div class="item-selector-container">
+            <div class="item-selector-header">
+                <h3>アイテムを選択</h3>
+                <input type="text" class="form-input" id="itemSearch" placeholder="アイテム名で検索...">
+                <button class="btn-close" id="btnItemSelectorClose">✕</button>
+            </div>
+            <div class="item-selector-list" id="itemSelectorList"></div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

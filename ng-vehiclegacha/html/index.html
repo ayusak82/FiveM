@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Gacha</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ガチャ演出アニメーション -->
+    <div id="gachaAnimation" class="gacha-animation hidden">
+        <div class="gacha-machine">
+            <div class="machine-top"></div>
+            <div class="machine-body">
+                <div class="machine-window">
+                    <div class="roulette-container">
+                        <div id="rouletteItems" class="roulette-items"></div>
+                    </div>
+                </div>
+                <div class="machine-button">
+                    <div class="button-glow"></div>
+                    <span>回転中...</span>
+                </div>
+            </div>
+            <div class="machine-bottom"></div>
+        </div>
+        <p class="animation-text">ガチャを回しています...</p>
+    </div>
+
+    <!-- 単発ガチャ結果表示 -->
+    <div id="gachaResult" class="gacha-result hidden">
+        <div class="gacha-container">
+            <div class="gacha-header">
+                <div class="celebration">🎉</div>
+                <h1 class="congratulations">おめでとうございます!</h1>
+            </div>
+            
+            <div class="gacha-content">
+                <div class="rarity-badge" id="rarityBadge">
+                    <span id="rarityText">レア</span>
+                </div>
+                
+                <div class="vehicle-info">
+                    <div class="vehicle-icon">🚗</div>
+                    <h2 id="vehicleName" class="vehicle-name">Vehicle Name</h2>
+                    <p id="vehiclePlate" class="vehicle-plate">プレート: ABC-123</p>
+                </div>
+                
+                <div class="success-message">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                    <p class="success-text">ガレージに追加されました!</p>
+                </div>
+            </div>
+            
+            <div class="confetti-container" id="confettiContainer"></div>
+        </div>
+    </div>
+
+    <!-- 10連ガチャ結果表示 -->
+    <div id="multiGachaResult" class="multi-gacha-result hidden">
+        <div class="multi-gacha-container">
+            <div class="multi-gacha-header">
+                <div class="celebration">🎊</div>
+                <h1 class="congratulations">10連ガチャ結果!</h1>
+            </div>
+            
+            <div class="multi-gacha-content">
+                <div id="multiVehicleGrid" class="multi-vehicle-grid"></div>
+                
+                <div class="multi-success-message">
+                    <p class="success-text">すべての車両がガレージに追加されました!</p>
+                </div>
+            </div>
+            
+            <div class="confetti-container" id="multiConfettiContainer"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

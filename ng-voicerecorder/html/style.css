@@ -1,0 +1,427 @@
+/* ========================
+   リセット & ベース設定
+======================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========================
+   録音モーダル
+======================== */
+
+#recordingContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.recording-modal {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid #404040;
+    min-width: 400px;
+    max-width: 500px;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ========================
+   録音ヘッダー
+======================== */
+
+.recording-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #404040;
+}
+
+.recording-header h2 {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.recording-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(220, 53, 69, 0.2);
+    padding: 8px 16px;
+    border-radius: 25px;
+    border: 1px solid #dc3545;
+}
+
+.pulse-dot {
+    width: 12px;
+    height: 12px;
+    background: #dc3545;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
+.recording-indicator span {
+    color: #dc3545;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ========================
+   録音コンテンツ
+======================== */
+
+.recording-content {
+    text-align: center;
+}
+
+.tape-info {
+    margin-bottom: 25px;
+}
+
+.tape-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.tape-name {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid #404040;
+}
+
+/* ========================
+   進行状況バー
+======================== */
+
+.recording-progress {
+    margin-bottom: 30px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #404040;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #dc3545 0%, #ff6b7a 100%);
+    width: 0%;
+    transition: width 0.1s ease;
+    border-radius: 4px;
+}
+
+.time-display {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.time-display span:nth-child(2) {
+    margin: 0 8px;
+    color: #888;
+}
+
+/* ========================
+   波形表示
+======================== */
+
+.waveform-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 1px solid #404040;
+}
+
+.waveform {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    gap: 4px;
+    height: 60px;
+}
+
+.wave-bar {
+    width: 6px;
+    background: linear-gradient(to top, #dc3545 0%, #ff6b7a 100%);
+    border-radius: 3px;
+    animation: waveAnimation 1.5s infinite ease-in-out;
+}
+
+.wave-bar:nth-child(1) { animation-delay: 0.1s; }
+.wave-bar:nth-child(2) { animation-delay: 0.2s; }
+.wave-bar:nth-child(3) { animation-delay: 0.3s; }
+.wave-bar:nth-child(4) { animation-delay: 0.4s; }
+.wave-bar:nth-child(5) { animation-delay: 0.5s; }
+.wave-bar:nth-child(6) { animation-delay: 0.4s; }
+.wave-bar:nth-child(7) { animation-delay: 0.3s; }
+.wave-bar:nth-child(8) { animation-delay: 0.2s; }
+.wave-bar:nth-child(9) { animation-delay: 0.1s; }
+.wave-bar:nth-child(10) { animation-delay: 0s; }
+
+@keyframes waveAnimation {
+    0%, 100% {
+        height: 10px;
+    }
+    50% {
+        height: 50px;
+    }
+}
+
+/* ========================
+   コントロールボタン
+======================== */
+
+.recording-controls {
+    margin-bottom: 20px;
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.control-btn:hover {
+    background: linear-gradient(135deg, #c82333 0%, #a02834 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+/* ========================
+   録音フッター
+======================== */
+
+.recording-footer {
+    text-align: center;
+    border-top: 1px solid #404040;
+    padding-top: 15px;
+}
+
+.status-text {
+    color: #888;
+    font-size: 14px;
+    font-style: italic;
+}
+
+/* ========================
+   ローディング画面
+======================== */
+
+#loadingContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.loading-modal {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    border: 1px solid #404040;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #404040;
+    border-top: 4px solid #dc3545;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* ========================
+   通知システム
+======================== */
+
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1002;
+    pointer-events: none;
+}
+
+.notification {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease-out;
+    font-size: 14px;
+    font-weight: 500;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.notification.error {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+.notification.warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #000;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========================
+   レスポンシブ対応
+======================== */
+
+@media (max-width: 768px) {
+    .recording-modal {
+        margin: 20px;
+        min-width: auto;
+        width: calc(100vw - 40px);
+        padding: 20px;
+    }
+    
+    .recording-header h2 {
+        font-size: 20px;
+    }
+    
+    .tape-icon {
+        font-size: 36px;
+    }
+    
+    .tape-name {
+        font-size: 16px;
+    }
+    
+    .control-btn {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+    
+    .notification-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+    
+    .notification {
+        max-width: none;
+    }
+}
+
+/* ========================
+   アクセシビリティ
+======================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .pulse-dot,
+    .wave-bar,
+    .loading-spinner {
+        animation: none;
+    }
+    
+    .progress-fill {
+        transition: none;
+    }
+}

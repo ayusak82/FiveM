@@ -1,0 +1,716 @@
+/* 基本スタイル */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --accent-color: #f39c12;
+    --danger-color: #e74c3c;
+    --dark-bg: rgba(20, 25, 35, 0.85);
+    --card-bg: rgba(30, 40, 60, 0.7);
+    --text-color: #ecf0f1;
+    --text-secondary: rgba(236, 240, 241, 0.7);
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+    --header-height: 60px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans JP', 'Arial', sans-serif;
+    overflow: hidden;
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* メインコンテナ */
+#scoreboard {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 9999;
+    transition: all var(--transition-speed) ease;
+}
+
+.scoreboard-container {
+    width: 400px;
+    max-height: 85vh;
+    background-color: var(--dark-bg);
+    border-radius: var(--border-radius);
+    margin-right: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    color: var(--text-color);
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed) ease;
+}
+
+/* スクロールバーのカスタマイズ */
+.scoreboard-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scoreboard-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+}
+
+.scoreboard-container::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: var(--border-radius);
+}
+
+/* ヘッダー */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: var(--header-height);
+    background-color: rgba(20, 25, 35, 0.9);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.header h1::before {
+    content: '\f15c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed) ease;
+}
+
+.close-btn:hover {
+    background-color: var(--danger-color);
+    transform: rotate(90deg);
+}
+
+/* タブメニュー */
+.tab-menu {
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(15, 20, 30, 0.7);
+}
+
+.tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px 5px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-size: 14px;
+    position: relative;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.tab-item.active {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--primary-color);
+}
+
+.tab-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+/* アイコンを追加 */
+.tab-item[data-tab="server-info"]::before {
+    content: '\f233';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+.tab-item[data-tab="robbery-info"]::before {
+    content: '\f3ed';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+.tab-item[data-tab="player-list"]::before {
+    content: '\f500';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+.tab-item[data-tab="job-info"]::before {
+    content: '\f0b1';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+/* タブコンテンツ */
+.tab-content {
+    display: none;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* サーバー情報タブ */
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    border-left: 3px solid var(--primary-color);
+}
+
+.info-item:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-item .label {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+/* アイコンを追加 */
+.info-item:nth-child(1) .label::before {
+    content: '\f500';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.info-item:nth-child(2) .label::before {
+    content: '\f017';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.info-item:nth-child(3) .label::before {
+    content: '\f2f2';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.info-item .value {
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+/* セクションタイトル */
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.section-title i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* 検索ボックス関連のCSSを削除 */
+
+/* 強盗情報タブ */
+.robbery-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    border-left: 3px solid var(--accent-color);
+}
+
+.robbery-item:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.robbery-item .name {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.robbery-item .name::before {
+    content: '\f3ed';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    color: var(--accent-color);
+}
+
+.robbery-item .status {
+    display: flex;
+    align-items: center;
+}
+
+.robbery-item .status .police-count {
+    margin-right: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.robbery-item .status i {
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.robbery-item .status .fa-check {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: var(--secondary-color);
+}
+
+.robbery-item .status .fa-times {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: var(--danger-color);
+}
+
+/* プレイヤーリストタブ */
+.player-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    border-left: 3px solid var(--primary-color);
+}
+
+.player-item:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.player-item .player-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-item .player-name {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+
+.player-item .player-name::before {
+    content: '\f007';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+/* カスタム名のスタイル */
+.player-item .custom-name {
+    color: var(--accent-color);
+}
+
+.player-item .self-name {
+    position: relative;
+}
+
+.player-item .edit-name-btn {
+    margin-left: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    opacity: 0.7;
+}
+
+.player-item .edit-name-btn:hover {
+    color: var(--primary-color);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.player-item .real-name-tooltip {
+    font-weight: 400;
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    margin-left: 5px;
+    opacity: 0.8;
+}
+
+.player-item .player-id, .player-item .player-phone {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.player-item .player-id::before {
+    content: '\f2c2';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.player-item .player-phone {
+    color: var(--secondary-color);
+}
+
+.player-item .player-phone::before {
+    content: '\f095';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.clickable-phone {
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    border-bottom: 1px dotted var(--secondary-color);
+    padding-bottom: 1px;
+}
+
+.clickable-phone:hover {
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(46, 204, 113, 0.7);
+}
+
+.player-item .player-job {
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    background-color: rgba(46, 204, 113, 0.15);
+    border-radius: 4px;
+    color: var(--secondary-color);
+}
+
+.player-item .player-job::before {
+    content: '\f0b1';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+/* ジョブ情報タブ */
+.job-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    border-left: 3px solid var(--secondary-color);
+}
+
+.job-item:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.job-item .job-name {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.job-item .job-name::before {
+    content: '\f0b1';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    color: var(--secondary-color);
+}
+
+.job-item .job-count {
+    font-weight: 700;
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--secondary-color);
+    padding: 2px 10px;
+    border-radius: 12px;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* 検索結果なし表示を削除 */
+
+/* 名前編集モーダル */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed) ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 400px;
+    background-color: var(--dark-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    transform: scale(0.8);
+    transition: all var(--transition-speed) ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(20, 25, 35, 0.9);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.modal-header h3::before {
+    content: '\f007';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.modal-close {
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--text-secondary);
+    transition: all var(--transition-speed) ease;
+}
+
+.modal-close:hover {
+    color: var(--danger-color);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body p {
+    margin: 0 0 15px 0;
+    color: var(--text-secondary);
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 14px;
+    transition: all var(--transition-speed) ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+.input-group input.input-error {
+    border-color: var(--danger-color);
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.name-requirements {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.name-requirements p {
+    margin: 5px 0;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgba(15, 20, 30, 0.7);
+}
+
+.btn {
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    margin-left: 10px;
+}
+
+.btn-cancel {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+}
+
+.btn-cancel:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-save {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn-save:hover {
+    background-color: rgba(52, 152, 219, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* レスポンシブデザイン */
+@media screen and (max-width: 768px) {
+    .scoreboard-container {
+        width: 90%;
+        max-width: 400px;
+        margin-right: 10px;
+    }
+    
+    .tab-item {
+        font-size: 13px;
+        padding: 10px 5px;
+    }
+    
+    .tab-content {
+        padding: 15px;
+    }
+    
+    .info-item, .robbery-item, .player-item, .job-item {
+        padding: 10px;
+    }
+}

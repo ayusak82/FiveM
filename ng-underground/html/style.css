@@ -1,0 +1,610 @@
+/* 基本スタイル */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #ffffff;
+    overflow: hidden;
+    user-select: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ゲームコンテナ */
+#gameContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+/* ゲームパネル */
+.game-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ゲームヘッダー */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(90deg, #2d3748, #4a5568);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.game-header h2 {
+    font-size: 24px;
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* タイマー */
+.timer-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.timer-bar {
+    width: 200px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.timer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, #00d4ff);
+    border-radius: 4px;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+#chemicalTimeText, #mechanicalTimeText {
+    font-weight: bold;
+    font-size: 18px;
+    color: #00ff88;
+}
+
+/* ゲームコンテンツ */
+.game-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 化学物質精製ゲーム */
+.chemical-station {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 30px;
+    width: 80%;
+    max-width: 1000px;
+}
+
+.beaker-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row: 1 / 3;
+}
+
+.beaker {
+    width: 120px;
+    height: 200px;
+    background: linear-gradient(180deg, transparent 20%, rgba(255, 255, 255, 0.1) 100%);
+    border: 3px solid #4a90e2;
+    border-radius: 0 0 60px 60px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
+}
+
+.liquid {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(180deg, #ff6b6b, #ff8e8e);
+    border-radius: 0 0 57px 57px;
+    transition: all 0.3s ease;
+    animation: bubble 2s infinite;
+}
+
+@keyframes bubble {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.ingredient-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ingredient-slot {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.ingredient-slot:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #00d4ff;
+    transform: translateX(5px);
+}
+
+.ingredient-slot.selected {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.ingredient {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    animation: glow 2s infinite alternate;
+}
+
+.red-ingredient { background: radial-gradient(circle, #ff4757, #ff3742); }
+.blue-ingredient { background: radial-gradient(circle, #3742fa, #2f3542); }
+.yellow-ingredient { background: radial-gradient(circle, #ffa502, #ff6348); }
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+    to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+}
+
+.control-panel {
+    grid-column: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.temperature-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.temperature-control label {
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+#temperatureSlider {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+#temperatureSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #00d4ff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+#temperatureValue {
+    font-weight: bold;
+    color: #00ff88;
+    min-width: 60px;
+}
+
+.mix-button {
+    padding: 15px 30px;
+    background: linear-gradient(45deg, #00d4ff, #00ff88);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.mix-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+}
+
+.mix-button:active {
+    transform: translateY(0);
+}
+
+.recipe-display {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border-left: 4px solid #00ff88;
+}
+
+.recipe-display h3 {
+    color: #00ff88;
+    margin-bottom: 15px;
+}
+
+.recipe {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.recipe-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.recipe-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 機械部品組み立てゲーム */
+.assembly-station {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.blueprint-area, .parts-inventory, .assembly-area {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.blueprint-area h3, .parts-inventory h3, .assembly-area h3 {
+    color: #00d4ff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.blueprint {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.blueprint-cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.parts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.part-item {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #4a5568, #2d3748);
+    border: 2px solid #00d4ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: bold;
+    color: white;
+}
+
+.part-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+}
+
+.part-item:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+.part-item.dragging {
+    opacity: 0.5;
+    z-index: 1000;
+}
+
+.assembly-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+.assembly-cell {
+    width: 50px;
+    height: 50px;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.assembly-cell.drag-over {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.assembly-cell.occupied {
+    border-style: solid;
+    border-color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+}
+
+/* プログレス表示 */
+.progress-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, #00d4ff);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+#chemicalProgressText, #mechanicalProgressText {
+    font-weight: bold;
+    color: #00ff88;
+    min-width: 40px;
+}
+
+/* ゲームフッター */
+.game-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.close-button {
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #ff4757, #ff3742);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+}
+
+.score-display {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+#currentScore {
+    color: #00ff88;
+}
+
+/* モーダル */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #2d3748, #4a5568);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#resultTitle {
+    color: #00d4ff;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.result-message {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.result-score {
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #00ff88;
+}
+
+.result-button {
+    padding: 12px 30px;
+    background: linear-gradient(45deg, #00d4ff, #00ff88);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.result-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+}
+
+/* ローディング画面 */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top: 4px solid #00d4ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-content p {
+    color: #00d4ff;
+    font-size: 16px;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .chemical-station {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+    
+    .assembly-station {
+        grid-template-columns: 1fr;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .timer-bar {
+        width: 150px;
+    }
+}

@@ -1,0 +1,327 @@
+/* 基本設定 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    color: #333;
+    overflow: hidden;
+}
+
+/* コンテナ */
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* モーダル基本スタイル */
+.modal {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    min-width: 500px;
+    max-width: 800px;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* モーダルヘッダー */
+.modal-header {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.modal-header h2,
+.modal-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* モーダルボディ */
+.modal-body {
+    padding: 30px;
+    color: white;
+}
+
+/* クイズ選択リスト */
+.quiz-list {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.quiz-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-item-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.quiz-icon {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.quiz-item h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.quiz-difficulty {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-left: auto;
+}
+
+.quiz-item p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* クイズ画面 */
+.quiz-modal {
+    min-width: 600px;
+}
+
+.quiz-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.progress-info {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* 問題コンテナ */
+.question-container {
+    text-align: center;
+}
+
+#questionText {
+    font-size: 20px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+/* 選択肢リスト */
+.options-list {
+    display: grid;
+    gap: 15px;
+}
+
+.option-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    text-align: left;
+}
+
+.option-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(5px);
+}
+
+.option-item:active {
+    transform: translateX(5px) scale(0.98);
+}
+
+/* 結果画面 */
+.result-modal {
+    min-width: 500px;
+}
+
+.result-content {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.result-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.result-correct {
+    color: #4CAF50;
+}
+
+.result-incorrect {
+    color: #f44336;
+}
+
+.result-text {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.answer-info {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+/* 最終結果画面 */
+.final-result-modal {
+    min-width: 600px;
+}
+
+.final-result-content {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.final-result-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+.success-icon {
+    color: #4CAF50;
+}
+
+.failure-icon {
+    color: #f44336;
+}
+
+.score-display {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.reward-info {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.reward-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #FFD700;
+}
+
+.auto-close-text {
+    margin-top: 20px;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+/* アニメーション */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .modal {
+        min-width: 90vw;
+        max-width: 90vw;
+        margin: 20px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .quiz-modal {
+        min-width: 90vw;
+    }
+    
+    .final-result-modal {
+        min-width: 90vw;
+    }
+}

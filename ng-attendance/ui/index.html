@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出退勤管理システム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="attendance-ui" class="ui-container" style="display: none;">
+        <div class="container">
+            <div class="header">
+                <h1>出退勤管理システム</h1>
+                <p>職場の出退勤を効率的に管理</p>
+                <button class="close-btn" id="close-btn">&times;</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="status">勤務状況</button>
+                <button class="tab-btn" data-tab="management" id="management-tab-btn" style="display: none;">管理画面</button>
+            </div>
+
+            <!-- 勤務状況タブ -->
+            <div id="status-tab" class="tab-content active">
+                <div class="status-section">
+                    <div class="current-status">
+                        <h2 id="current-time">--:--:--</h2>
+                        <p id="current-date">----/--/--</p>
+                        <p id="job-status">勤務状況を確認中...</p>
+                    </div>
+                    
+                    <div class="status-info">
+                        <div class="status-row">
+                            <span class="status-label">現在のジョブ:</span>
+                            <span class="status-value" id="current-job">なし</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-label">勤務開始時刻:</span>
+                            <span class="status-value" id="work-start">--:--:--</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-label">勤務時間:</span>
+                            <span class="status-value" id="work-duration">0時間 0分</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-label">勤務状態:</span>
+                            <span class="status-value status-inactive" id="work-status">非勤務</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 管理画面タブ -->
+            <div id="management-tab" class="tab-content">
+                <div class="management-section">
+                    <div class="boss-header">
+                        <h3>管理者専用画面</h3>
+                        <p id="boss-job-title">Loading...</p>
+                    </div>
+                    
+                    <div class="employee-search">
+                        <input type="text" class="search-input" id="employee-search" placeholder="従業員名またはCitizen IDで検索..." />
+                    </div>
+
+                    <div class="employee-list">
+                        <h4 id="employee-list-title">勤務記録のある全従業員</h4>
+                        <p class="employee-list-description">このジョブで一度でも勤務したことがあるすべてのプレイヤーを表示</p>
+                        <div class="employee-grid" id="employee-grid">
+                            <div class="loading">データを読み込み中...</div>
+                        </div>
+                    </div>
+
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="calendar-nav" id="prev-month">◀</button>
+                            <div class="calendar-title" id="calendar-title">2025年 6月</div>
+                            <button class="calendar-nav" id="next-month">▶</button>
+                        </div>
+                        
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- カレンダーがここに生成されます -->
+                        </div>
+                    </div>
+
+                    <div class="attendance-details">
+                        <div class="employee-info">
+                            <h3 id="selected-employee">従業員を選択してください</h3>
+                            <p>選択した日付の出退勤記録</p>
+                        </div>
+
+                        <div class="total-hours">
+                            <h3>総出勤時間</h3>
+                            <p id="total-work-hours">0時間 0分</p>
+                        </div>
+
+                        <div class="attendance-record">
+                            <div class="record-item">
+                                <h4>出勤時刻</h4>
+                                <p id="clock-in-time">記録なし</p>
+                            </div>
+                            <div class="record-item">
+                                <h4>退勤時刻</h4>
+                                <p id="clock-out-time">記録なし</p>
+                            </div>
+                        </div>
+
+                        <div class="record-summary" id="record-summary" style="display: none;">
+                            <h4>勤務詳細</h4>
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <span class="summary-label">勤務時間:</span>
+                                    <span class="summary-value" id="daily-duration">0時間 0分</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">ジョブグレード:</span>
+                                    <span class="summary-value" id="daily-grade">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    color: #333;
+    overflow: hidden;
+}
+
+.ui-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    overflow-y: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    position: relative;
+}
+
+.header h1 {
+    color: #333;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #dc3545;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #c82333;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #666;
+}
+
+.tab-btn.active {
+    background: #007bff;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 勤務状況セクション */
+.status-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.current-status {
+    background: #f8f9fa;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.current-status h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.current-status p {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.status-info {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.status-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.status-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.status-value {
+    color: #333;
+    font-weight: 600;
+}
+
+.status-active {
+    color: #28a745 !important;
+}
+
+.status-inactive {
+    color: #6c757d !important;
+}
+
+/* 管理画面セクション */
+.management-section {
+    padding: 20px;
+}
+
+.boss-header {
+    background: #007bff;
+    color: white;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.boss-header h3 {
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+.boss-header p {
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+.employee-search {
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.employee-list {
+    margin-bottom: 20px;
+}
+
+.employee-list h4 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 8px;
+}
+
+.employee-list-description {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.employee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.employee-card {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.employee-card:hover {
+    background: #e9ecef;
+    border-color: #007bff;
+    transform: translateY(-2px);
+}
+
+.employee-card.selected {
+    background: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
+.employee-card.inactive {
+    background: #f1f1f1;
+    opacity: 0.7;
+    border-color: #ccc;
+}
+
+.employee-card.inactive:hover {
+    background: #e6e6e6;
+}
+
+.employee-card h5 {
+    margin: 0 0 5px 0;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.employee-card p {
+    margin: 0 0 3px 0;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.employee-card.selected p {
+    opacity: 0.9;
+}
+
+.employee-card .last-worked {
+    font-size: 0.8em;
+    color: #666;
+    font-style: italic;
+}
+
+.employee-card.selected .last-worked {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.employee-card.inactive .last-worked {
+    color: #999;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
+
+/* カレンダー */
+.calendar-container {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-nav {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s ease;
+}
+
+.calendar-nav:hover {
+    background: #0056b3;
+}
+
+.calendar-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #333;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.calendar-day-header {
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    color: #666;
+    background: #e9ecef;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.calendar-day {
+    text-align: center;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-day:hover {
+    background: #e9ecef;
+    transform: scale(1.05);
+}
+
+.calendar-day.selected {
+    background: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
+.calendar-day.has-record {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+    font-weight: 600;
+}
+
+.calendar-day.has-record.selected {
+    background: #007bff;
+    color: white;
+}
+
+.calendar-day.other-month {
+    color: #ccc;
+    opacity: 0.5;
+}
+
+/* 出勤詳細 */
+.attendance-details {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e0e0;
+}
+
+.employee-info {
+    background: #f8f9fa;
+    color: #333;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+.employee-info h3 {
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+.employee-info p {
+    font-size: 1em;
+    opacity: 0.8;
+}
+
+.total-hours {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.total-hours h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.total-hours p {
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.attendance-record {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.record-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+    border: 1px solid #e0e0e0;
+}
+
+.record-item h4 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.record-item p {
+    color: #666;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.record-summary {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+
+.record-summary h4 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 8px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.summary-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.summary-value {
+    color: #333;
+    font-weight: 600;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+        max-height: 95vh;
+    }
+
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .employee-grid {
+        grid-template-columns: 1fr;
+        max-height: 250px;
+    }
+
+    .attendance-record {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .current-status h2 {
+        font-size: 1.8em;
+    }
+
+    .calendar-grid {
+        gap: 2px;
+    }
+
+    .calendar-day {
+        padding: 8px;
+        min-height: 35px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 98%;
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 1.5em;
+    }
+
+    .calendar-day {
+        padding: 6px;
+        min-height: 30px;
+        font-size: 0.8em;
+    }
+}
+
+/* 複数ジョブ詳細表示 */
+.multi-job-details {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.multi-job-details h4 {
+    margin-bottom: 15px;
+    color: #495057;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.job-detail {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.job-detail:last-child {
+    margin-bottom: 0;
+}
+
+.job-name {
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.job-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.job-start, .job-duration {
+    flex: 1;
+}
+
+.job-duration {
+    text-align: right;
+    font-weight: 500;
+    color: #28a745;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .job-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .job-duration {
+        text-align: left;
+    }
+}
+
+/* 複数ジョブ記録のあるカレンダー日付 */
+.calendar-day.multi-job-record {
+    border: 2px solid #007bff;
+    background: linear-gradient(135deg, #d4edda 50%, #cce5ff 50%);
+    font-weight: bold;
+}
+
+.calendar-day.multi-job-record.selected {
+    background: #007bff;
+    color: white;
+}
+
+.monthly-hours-summary {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #334155;
+}
+
+.month-hour-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 2px 0;
+}
+
+.month-label {
+    color: #64748b;
+}
+
+.month-hours {
+    color: #3b82f6;
+    font-weight: 500;
+}
+
+/* 月ごとの詳細セクション */
+.monthly-detail-section {
+    background: #3b82f6;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.monthly-detail-section h4 {
+    color: #f1f5f9;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.monthly-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.monthly-item {
+    background: #3b82f6;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #334155;
+}
+
+.monthly-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.monthly-name {
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
+.monthly-hours {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.monthly-jobs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.job-time {
+    background: #3b82f6;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* ジョブバッジ */
+.employee-jobs-list {
+    display: flex;
+    gap: 6px;
+    margin: 8px 0;
+}
+
+.job-badge {
+    background: #3b82f6;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.employee-job-text {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 4px 0;
+}

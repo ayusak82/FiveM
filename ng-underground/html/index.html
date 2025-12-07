@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Underground Base Minigames</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer" class="hidden">
+        <!-- 化学物質精製ゲーム -->
+        <div id="chemicalGame" class="game-panel">
+            <div class="game-header">
+                <h2>化学物質精製</h2>
+                <div class="timer-container">
+                    <div class="timer-bar">
+                        <div id="chemicalTimer" class="timer-fill"></div>
+                    </div>
+                    <span id="chemicalTimeText">30</span>
+                </div>
+            </div>
+            
+            <div class="game-content">
+                <div class="chemical-station">
+                    <div class="beaker-container">
+                        <div class="beaker" id="mainBeaker">
+                            <div class="liquid" id="mainLiquid"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-slots">
+                        <div class="ingredient-slot" data-ingredient="red">
+                            <div class="ingredient red-ingredient"></div>
+                            <span>赤色試薬</span>
+                        </div>
+                        <div class="ingredient-slot" data-ingredient="blue">
+                            <div class="ingredient blue-ingredient"></div>
+                            <span>青色試薬</span>
+                        </div>
+                        <div class="ingredient-slot" data-ingredient="yellow">
+                            <div class="ingredient yellow-ingredient"></div>
+                            <span>黄色試薬</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-panel">
+                        <div class="temperature-control">
+                            <label>温度調整</label>
+                            <input type="range" id="temperatureSlider" min="0" max="100" value="50">
+                            <span id="temperatureValue">50°C</span>
+                        </div>
+                        
+                        <button id="mixButton" class="mix-button">混合開始</button>
+                    </div>
+                    
+                    <div class="recipe-display">
+                        <h3>目標レシピ</h3>
+                        <div id="targetRecipe" class="recipe">
+                            <!-- 動的に生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-display">
+                <div class="progress-bar">
+                    <div id="chemicalProgress" class="progress-fill"></div>
+                </div>
+                <span id="chemicalProgressText">0%</span>
+            </div>
+        </div>
+        
+        <!-- 機械部品組み立てゲーム -->
+        <div id="mechanicalGame" class="game-panel">
+            <div class="game-header">
+                <h2>機械部品組み立て</h2>
+                <div class="timer-container">
+                    <div class="timer-bar">
+                        <div id="mechanicalTimer" class="timer-fill"></div>
+                    </div>
+                    <span id="mechanicalTimeText">45</span>
+                </div>
+            </div>
+            
+            <div class="game-content">
+                <div class="assembly-station">
+                    <div class="blueprint-area">
+                        <h3>設計図</h3>
+                        <div id="blueprint" class="blueprint">
+                            <!-- 動的に生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="parts-inventory">
+                        <h3>部品在庫</h3>
+                        <div id="partsContainer" class="parts-grid">
+                            <!-- 動的に生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="assembly-area">
+                        <h3>組み立てエリア</h3>
+                        <div id="assemblyGrid" class="assembly-grid">
+                            <!-- 動的に生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-display">
+                <div class="progress-bar">
+                    <div id="mechanicalProgress" class="progress-fill"></div>
+                </div>
+                <span id="mechanicalProgressText">0%</span>
+            </div>
+        </div>
+        
+        <!-- 共通UI -->
+        <div class="game-footer">
+            <button id="closeButton" class="close-button">閉じる</button>
+            <div class="score-display">
+                <span>スコア: <span id="currentScore">0</span></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 結果表示 -->
+    <div id="resultModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="resultTitle">結果</h2>
+            <div id="resultMessage" class="result-message"></div>
+            <div id="resultScore" class="result-score"></div>
+            <button id="resultOkButton" class="result-button">OK</button>
+        </div>
+    </div>
+    
+    <!-- ローディング表示 -->
+    <div id="loadingScreen" class="loading-screen hidden">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>ゲームを準備中...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

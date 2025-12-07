@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市役所ローンシステム</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loan-container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <h1>市役所ローンサービス</h1>
+            </div>
+            <button id="close-button"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-button active" data-tab="loans">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>ローン情報</span>
+            </button>
+            <button class="tab-button" data-tab="apply">
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>ローン申請</span>
+            </button>
+            <button class="tab-button" data-tab="vehicle">
+                <i class="fas fa-car"></i>
+                <span>車両担保ローン</span>
+            </button>
+            <button class="tab-button" data-tab="repay">
+                <i class="fas fa-money-check"></i>
+                <span>返済</span>
+            </button>
+        </div>
+        
+        <div class="tab-content">
+            <!-- ローン情報タブ -->
+            <div id="loans" class="tab-pane active">
+                <div class="tab-header">
+                    <h2>現在のローン</h2>
+                    <button id="reload-loans-btn" class="reload-button" title="データを更新">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="loan-list" id="loan-info-list">
+                    <!-- ローン情報がここに動的に追加されます -->
+                    <div class="no-loans">現在アクティブなローンはありません。</div>
+                </div>
+            </div>
+            
+            <!-- ローン申請タブ -->
+            <div id="apply" class="tab-pane">
+                <h2>ローン申請</h2>
+                <div class="loan-form">
+                    <div class="form-group">
+                        <label for="loan-amount">借入金額</label>
+                        <input type="number" id="loan-amount" min="5000" max="50000" value="10000">
+                        <span class="hint">$5,000 から $50,000 まで</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="loan-days">返済期間（日）</label>
+                        <input type="number" id="loan-days" min="1" max="7" value="7">
+                        <span class="hint">1日から7日まで</span>
+                    </div>
+                    
+                    <div class="loan-summary">
+                        <h3>ローン概要</h3>
+                        <div class="summary-item">
+                            <span>借入金額:</span>
+                            <span id="summary-amount">$10,000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>利率:</span>
+                            <span id="summary-rate">5%</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>利息金額:</span>
+                            <span id="summary-interest">$500</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>返済総額:</span>
+                            <span id="summary-total">$10,500</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>返済期間:</span>
+                            <span id="summary-days">7日</span>
+                        </div>
+                    </div>
+                    
+                    <button id="apply-loan-btn" class="action-button">
+                        <i class="fas fa-check-circle"></i>
+                        ローンを申請する
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 車両担保ローンタブ -->
+            <div id="vehicle" class="tab-pane">
+                <div class="tab-header">
+                    <h2>車両担保ローン</h2>
+                    <button id="reload-vehicles-btn" class="reload-button" title="車両データを更新">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="vehicle-selection">
+                    <h3>担保車両を選択</h3>
+                    <div class="vehicle-list" id="vehicle-list">
+                        <!-- 車両リストがここに動的に追加されます -->
+                        <div class="no-vehicles">利用可能な車両がありません。</div>
+                    </div>
+                </div>
+                
+                <div class="vehicle-loan-form" id="vehicle-loan-form" style="display: none;">
+                    <h3>車両担保ローン申請</h3>
+                    <div class="selected-vehicle" id="selected-vehicle-info">
+                        <!-- 選択された車両情報がここに表示されます -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vehicle-loan-amount">借入金額</label>
+                        <input type="number" id="vehicle-loan-amount" min="1000" max="50000" value="10000">
+                        <span class="hint" id="vehicle-amount-hint">$1,000 から $50,000 まで</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicle-loan-days">返済期間（日）</label>
+                        <input type="number" id="vehicle-loan-days" min="1" max="14" value="7">
+                        <span class="hint">1日から14日まで</span>
+                    </div>
+                    
+                    <div class="loan-summary">
+                        <h3>ローン概要</h3>
+                        <div class="summary-item">
+                            <span>借入金額:</span>
+                            <span id="v-summary-amount">$10,000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>利率:</span>
+                            <span id="v-summary-rate">3%</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>利息金額:</span>
+                            <span id="v-summary-interest">$300</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>返済総額:</span>
+                            <span id="v-summary-total">$10,300</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>返済期間:</span>
+                            <span id="v-summary-days">7日</span>
+                        </div>
+                        <div class="warning-text">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            期限内に返済できない場合、車両が没収されます。
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="back-to-vehicles-btn" class="action-button secondary">
+                            <i class="fas fa-arrow-left"></i>
+                            戻る
+                        </button>
+                        <button id="apply-vehicle-loan-btn" class="action-button">
+                            <i class="fas fa-check-circle"></i>
+                            ローンを申請する
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 返済タブ -->
+            <div id="repay" class="tab-pane">
+                <div class="tab-header">
+                    <h2>ローン返済</h2>
+                    <button id="reload-repay-btn" class="reload-button" title="返済データを更新">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="repay-loan-list" id="repay-loan-list">
+                    <!-- 返済可能なローンリストがここに動的に追加されます -->
+                    <div class="no-loans">返済可能なローンはありません。</div>
+                </div>
+                
+                <div class="repay-form" id="repay-form" style="display: none;">
+                    <h3>ローン返済</h3>
+                    <div class="selected-loan" id="selected-loan-info">
+                        <!-- 選択されたローン情報がここに表示されます -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="repay-amount">返済金額</label>
+                        <input type="number" id="repay-amount" min="1" value="1000">
+                        <span class="hint" id="repay-amount-hint">$1 から $1,000 まで</span>
+                    </div>
+                    
+                    <div class="loan-summary">
+                        <h3>返済概要</h3>
+                        <div class="summary-item">
+                            <span>現在の残額:</span>
+                            <span id="r-summary-current">$10,000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>返済額:</span>
+                            <span id="r-summary-payment">$1,000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>返済後残額:</span>
+                            <span id="r-summary-remaining">$9,000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="back-to-loans-btn" class="action-button secondary">
+                            <i class="fas fa-arrow-left"></i>
+                            戻る
+                        </button>
+                        <button id="repay-loan-btn" class="action-button">
+                            <i class="fas fa-money-bill"></i>
+                            返済する
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

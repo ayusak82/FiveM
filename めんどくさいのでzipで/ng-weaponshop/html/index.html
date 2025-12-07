@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>武器ショップ</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="weaponshop-container">
+        <div id="shop-header">
+            <div id="logo-container">
+                <img id="shop-logo" src="" alt="武器ショップロゴ">
+            </div>
+            <div id="shop-title">
+                <h1 id="title"></h1>
+                <p id="subtitle"></p>
+            </div>
+            <div id="close-button">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <div id="shop-content">
+            <div id="items-container"></div>
+            
+            <div id="item-details">
+                <div id="selected-item-info">
+                    <h2>アイテムを選択してください</h2>
+                    <p>左側のリストからアイテムを選択すると、詳細が表示されます。</p>
+                </div>
+                <div id="add-to-cart" style="display: none;">
+                    <div class="quantity-controls">
+                        <button id="decrease-quantity" class="quantity-btn"><i class="fas fa-minus"></i></button>
+                        <input type="number" id="item-quantity" value="1" min="1" max="100">
+                        <button id="increase-quantity" class="quantity-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button id="add-cart-btn" class="action-btn">
+                        <i class="fas fa-cart-plus"></i> カートに追加
+                    </button>
+                </div>
+                <div id="cart-container" style="display: none;">
+                    <h3>カート内のアイテム</h3>
+                    <div id="cart-items"></div>
+                    <div id="cart-total">合計: $<span id="total-price">0</span></div>
+                </div>
+                <div id="purchase-options" style="display: none;">
+                    <h3>支払い方法を選択</h3>
+                    <div id="payment-methods">
+                        <button id="pay-cash" class="payment-btn">
+                            <i class="fas fa-money-bill"></i> 現金で支払う
+                        </button>
+                        <button id="pay-bank" class="payment-btn">
+                            <i class="fas fa-university"></i> 銀行で支払う
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="notification" class="hidden">
+            <div id="notification-icon"><i class="fas fa-info-circle"></i></div>
+            <div id="notification-message"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

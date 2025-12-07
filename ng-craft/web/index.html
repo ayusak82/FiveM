@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NG Craft - クラフトシステム</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app" class="hidden">
+        <!-- メインコンテナ -->
+        <div class="craft-container">
+            <!-- ヘッダー -->
+            <div class="header">
+                <div class="header-left">
+                    <h1 class="title">
+                        <i class="fas fa-hammer"></i>
+                        <span id="stationName">クラフト台</span>
+                    </h1>
+                </div>
+                <div class="header-right">
+                    <div class="player-info">
+                        <div class="level-info">
+                            <span class="label">レベル</span>
+                            <span id="playerLevel" class="value">1</span>
+                        </div>
+                        <div class="xp-info">
+                            <span class="label">経験値</span>
+                            <div class="xp-bar">
+                                <div id="xpProgress" class="xp-progress"></div>
+                                <span id="xpText" class="xp-text">0 / 1000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="closeBtn" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- メインコンテンツ -->
+            <div class="main-content">
+                <!-- 左側パネル（レシピ一覧） -->
+                <div class="left-panel">
+                    <div class="panel-header">
+                        <h3>レシピ一覧</h3>
+                        <div class="search-container">
+                            <input type="text" id="searchInput" placeholder="レシピを検索...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="recipe-categories">
+                        <button class="category-btn active" data-category="all">
+                            <i class="fas fa-th"></i>
+                            すべて
+                        </button>
+                    </div>
+                    <div id="recipeList" class="recipe-list">
+                        <!-- レシピがここに動的に追加される -->
+                    </div>
+                </div>
+
+                <!-- 中央パネル（レシピ詳細） -->
+                <div class="center-panel">
+                    <div class="recipe-detail" id="recipeDetail">
+                        <div class="no-selection">
+                            <i class="fas fa-hand-pointer"></i>
+                            <p>レシピを選択してください</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側パネル（アクティブクラフト） -->
+                <div class="right-panel">
+                    <div class="panel-header">
+                        <h3>
+                            <i class="fas fa-cog fa-spin"></i>
+                            クラフト中 
+                            <span id="activeCraftCount" class="count">0</span>
+                        </h3>
+                    </div>
+                    <div id="activeCraftList" class="active-craft-list">
+                        <div class="no-active-crafts">
+                            <i class="fas fa-clock"></i>
+                            <p>進行中のクラフトはありません</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- クラフト開始モーダル -->
+        <div id="craftModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">クラフト開始</h3>
+                    <button id="modalClose" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="craft-item-info">
+                        <div class="item-icon">
+                            <i id="modalIcon" class="fas fa-cube"></i>
+                        </div>
+                        <div class="item-details">
+                            <h4 id="modalItemName">アイテム名</h4>
+                            <p id="modalItemDescription">アイテムの説明</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quantity-selector">
+                        <label>作成数量</label>
+                        <div class="quantity-controls">
+                            <button id="decreaseQty" class="qty-btn">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" id="craftQuantity" value="1" min="1" max="99">
+                            <button id="increaseQty" class="qty-btn">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="total-requirements">
+                        <h4>必要な材料</h4>
+                        <div id="totalIngredients" class="ingredients-list">
+                            <!-- 材料リストがここに追加される -->
+                        </div>
+                    </div>
+
+                    <div class="craft-info">
+                        <div class="info-item">
+                            <span class="label">予想時間:</span>
+                            <span id="totalTime" class="value">10秒</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">獲得XP:</span>
+                            <span id="totalXP" class="value">100 XP</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelCraft" class="btn btn-secondary">キャンセル</button>
+                    <button id="startCraft" class="btn btn-primary">
+                        <i class="fas fa-play"></i>
+                        クラフト開始
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 確認モーダル -->
+        <div id="confirmModal" class="modal hidden">
+            <div class="modal-content small">
+                <div class="modal-header">
+                    <h3>確認</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmMessage">本当にキャンセルしますか？</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirmNo" class="btn btn-secondary">いいえ</button>
+                    <button id="confirmYes" class="btn btn-danger">はい</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
